@@ -1,11 +1,3 @@
-"""
-- [] Create and connect to a local SQLite database
-        Usage of the built-in Python OS, sys, and SQLite libraries
-        Write a series of Python functions that can create an SQLite instance
-        Write a Python function that can query the master database for the SQLite instance created
-        Write a series of Python functions that can create and connect to a database hosted within the SQLite instance
-"""
-
 import sqlite3
 import os
 import sys
@@ -63,67 +55,126 @@ def table_exists(table):
 def create_hash_table():
     # Create a SQLite DB Table
     result = False
-    query = "CREATE TABLE hashs (id integer primary key, filename text, hash )"
+    query = "CREATE TABLE files (file TEXT, md5 TEXT)"
+    conn_db = connect_db()
     try:
-        conn_db = connect_db()
         if not conn_db is None:
             if not table_exists('files'):
+                cursor = conn_db.cursor()
                 try:
-                    cursor = conn.cursor()
                     cursor.execute(query)
-                    #
+                except sqlite3.OperationalError:
+                    if cursor != None:
+                        cursor.close()
+                finally:
+                    conn_db.commit()
+                    if cursor != None:
+                        cursor.close()
+                    result = True
+    except sqlite3.OperationalError as err:
+        print(str(err))
+        if conn_db != None:
+            conn_db.close()
+    finally:
+        if conn_db != None:
+            conn_db.close()
     return result
 
 def create_hash_table_idx():
     # Create a SQLite DB Table Index
     table = 'files'
-    query = 'CREATE INDEX idxfile ON ...'
+    query = 'CREATE INDEX idxfile ON files (file, md5)'
+    conn_db = connect_db()
     try:
-        conn_db = connect_db()
         if not conn is None:
-            if not table_exists(table):
+            if table_exists(table):
+                cursor = conn_db.cursor
                 try:
-                    cursor = conn.cursor
                     cursor.execute(query)
-                    #
+                except sqlite3.OperationalError:
+                    if cursor != None:
+                        cursor.close()
+                finally:
+                    conn_db.commit()
+                    if cursor != None:
+                        cursor.close()
+    except sqlite3.OperationalError as err:
+        print(str(err))
+        if conn_db != None:
+            conn.close()
+    finally:
+        if conn_db != None:
+            conn_db.close()
 
-def run_cmd(qry):
+def run_cmd(qry,args):
     # Run a specific command on the SQLite DB
+    conn_db = connect_db()
     try:
-        conn = connect_db()
-        if not conn in None:
+        if not conn_db in None:
             if table_exists('files'):
+                cursor = conn_db.cursor()
                 try:
-                    cursor = conn.cursor()
-                    cursor.execute(qry)
-                    #
+                    cursor.execute(qry,args)
+                except sqlite3.OperationalError:
+                    if cursor != None:
+                        cursor.close()
+    except sqlite3.OperationalError as err:
+        print(str(err))
+        if conn_db != None:
+            conn_db.close()
+    finally:
+        if conn_db != None:
+            conn_db.close()
 
 def update_hash_table(fname, md5):
     # Update the SQLite File Table
-    qry = "UPDATE files ..."
-    runcmd(qry)
+    qry = "UPDATE files SET md5=? WHERE file=?"
+    args = (md5, fname)
+    run_cmd(qry,args)
 
 def insert_hash_table(fname, md5):
     # Insert into the SQLite File Table
-    qry = "INSERT INTO files..."
+    qry = "INSERT INTO files (file, md5) VALUES (?, ?)"
+    args = (fname, md5)
     run_cmd(qry)
 
 def setup_hash_table(fname, md5):
+    # Set up the hash table
     #Call the create hash table function
+    create_hash_table()
     #Call the create index on the has table function
+    create_hash_table_idx()
+
     insert_hash_table(fname, md5)
 
 def md5_in_db(fname):
+    # Checks if md5 hash tag exists in the SQLite DB
     items = []
-    qry = "SELECT ..."
+    qry = "SELECT md5 FROM files WHERE file=?"
+    args(fname,)
+    conn_db = connect_db()
     try:
-        conn = connect_db()
         if not conn is None:
             if table_exists('files'):
+                cursor = conn_db.cursor()
                 try:
-                    cursor = conn.cursor()
-                    cursor.execute(qry)
-                    #
+                    cursor.execute(qry, args)
+                    for row in cursor:
+                        items.append(row[0])
+                except sqlite3.OperationalError as err:
+                    print(str(err))
+                    if cursor != None:
+                        cursor.close()
+                finally:
+                    if cursor != None:
+                        cursor.close()
+    except sqlite3.OperationalError as err:
+        print(str(err))
+        if conn_db != None:
+            conn_sb.close()
+    finally:
+        if conn_db != None:
+            conn_db.close()
     return items
 
 

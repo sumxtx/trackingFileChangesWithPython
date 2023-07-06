@@ -44,7 +44,7 @@ Listed under the bullet points that follow, are the steps required to implement 
         Write a Python function that can query the master database for the SQLite instance created
         Write a series of Python functions that can create and connect to a database hosted within the SQLite instance
 
-- [ ] Create tables and cursors specifically designed for tracking file changes
+- [x] Create tables and cursors specifically designed for tracking file changes
         Write a series of Python functions that can create file-level tracking database tables on an SQLite instance
         Write a Python function that can create file-level tracking table indexes on an SQLite instance
         Write a Python function that can perform query the master database and determine if a database table exists on an SQLite instance

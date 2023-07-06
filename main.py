@@ -10,26 +10,53 @@ import sqlite3
 import os
 import sys
 
-def get_db_filename():
-    """ Name of the SQLite DB file"""
+def get_basefile():
+    #Name of the script
     return os.path.splitext(os.path.basename(__file__))[0]
 
-conn_db = sqlite3.connect("datafile.db")
-cursor = conn_db.cursor()
+def connect_db():
+    #Connect to the SQLite DB
+    try:
+        db_filename = get_basefile() + '.db'
+        db_conn = sqlite3.connect(db_filename, timeout=2)
+    except BaseException as err:
+        print(str(err))
+        db_conn = None
+    return db_conn
 
+def core_cursor(db_conn, query, args):
+    #Opens a SQLite DB Cursor
+    result = False
+    cursor = db_conn.cursor()
+    try:
+        cursor.execute(query, args)
+        rows = cursor.fetchall()
+        num_rows = len(list(rows))
+        if num_rows > 0:
+            result = True
+    except sqlite3.OperationalError as err:
+        print(str(err))
+        if cursor != None:
+            cursor.close()
+    finally:
+        if cursor != None:
+            cursor.close()
+    return result
 
-# Some inserting examples
-cursor.execute("create table people (id integer primary key, name text, count integer)")
+def table_exists(table):
+    #Checks if a SQLite DB Table already exists
+    result = False
+    conn_db = connect_db()
+    try:
+        if not conn_db is None:
+            db_querry = "SELECT name from sqlite_master WHERE type='table' AND name=?"
+            args = (table,)
+            result = core_cursor(conn_db, db_querry, args)
+            if conn_db != None:
+                conn_db.close()
+    except sqlite3.OperationalError as err:
+        print(str(err))
+        if conn_db != None:
+            conn_db.close()
+    return result
 
-cursor.execute("insert into people (name,count) values ('Bob', 1)")
-
-cursor.execute("insert into people (name, count) values (?,?)", ("Jill", 15))
-
-cursor.execute("insert into people (name, count) values (:username, :usercount)", {"username": "Joe", "usercount":10})
-
-conn_db.commit()
-
-result = cursor.execute("select * from people")
-print(result.fetchall())
-
-conn_db.close()

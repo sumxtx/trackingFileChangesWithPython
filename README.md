@@ -38,7 +38,7 @@ set forth for this project, many of which are picked up on the job.
 
 Listed under the bullet points that follow, are the steps required to implement this project.
 
-- [ ] Create and connect to a local SQLite database
+- [x] Create and connect to a local SQLite database
         Usage of the built-in Python OS, sys, and SQLite libraries
         Write a series of Python functions that can create an SQLite instance
         Write a Python function that can query the master database for the SQLite instance created

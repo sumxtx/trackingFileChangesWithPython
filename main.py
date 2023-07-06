@@ -60,3 +60,71 @@ def table_exists(table):
             conn_db.close()
     return result
 
+def create_hash_table():
+    # Create a SQLite DB Table
+    result = False
+    query = "CREATE TABLE hashs (id integer primary key, filename text, hash )"
+    try:
+        conn_db = connect_db()
+        if not conn_db is None:
+            if not table_exists('files'):
+                try:
+                    cursor = conn.cursor()
+                    cursor.execute(query)
+                    #
+    return result
+
+def create_hash_table_idx():
+    # Create a SQLite DB Table Index
+    table = 'files'
+    query = 'CREATE INDEX idxfile ON ...'
+    try:
+        conn_db = connect_db()
+        if not conn is None:
+            if not table_exists(table):
+                try:
+                    cursor = conn.cursor
+                    cursor.execute(query)
+                    #
+
+def run_cmd(qry):
+    # Run a specific command on the SQLite DB
+    try:
+        conn = connect_db()
+        if not conn in None:
+            if table_exists('files'):
+                try:
+                    cursor = conn.cursor()
+                    cursor.execute(qry)
+                    #
+
+def update_hash_table(fname, md5):
+    # Update the SQLite File Table
+    qry = "UPDATE files ..."
+    runcmd(qry)
+
+def insert_hash_table(fname, md5):
+    # Insert into the SQLite File Table
+    qry = "INSERT INTO files..."
+    run_cmd(qry)
+
+def setup_hash_table(fname, md5):
+    #Call the create hash table function
+    #Call the create index on the has table function
+    insert_hash_table(fname, md5)
+
+def md5_in_db(fname):
+    items = []
+    qry = "SELECT ..."
+    try:
+        conn = connect_db()
+        if not conn is None:
+            if table_exists('files'):
+                try:
+                    cursor = conn.cursor()
+                    cursor.execute(qry)
+                    #
+    return items
+
+
+

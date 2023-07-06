@@ -38,36 +38,36 @@ set forth for this project, many of which are picked up on the job.
 
 Listed under the bullet points that follow, are the steps required to implement this project.
 
-- [] Create and connect to a local SQLite database
+- [ ] Create and connect to a local SQLite database
         Usage of the built-in Python OS, sys, and SQLite libraries
         Write a series of Python functions that can create an SQLite instance
         Write a Python function that can query the master database for the SQLite instance created
         Write a series of Python functions that can create and connect to a database hosted within the SQLite instance
 
-- [] Create tables and cursors specifically designed for tracking file changes
+- [ ] Create tables and cursors specifically designed for tracking file changes
         Write a series of Python functions that can create file-level tracking database tables on an SQLite instance
         Write a Python function that can create file-level tracking table indexes on an SQLite instance
         Write a Python function that can perform query the master database and determine if a database table exists on an SQLite instance
         Write a Python function that can create a database table cursor on an existing database table, on an SQLite instance
 
-- [] Understand and work with file information and MD5 hashes
+- [ ] Understand and work with file information and MD5 hashes
         Write a Python function that can read file-level access and DateTime info on any given file
         Write a Python function that can generate an MD5 hash for any given file
         Write a Python function that can determine (calculate) the MD5 hash of any given file, which will be later used to determine if a file has changed
         Write a Python function that can secure a file using an MD5 hash
 
-- [] Understand and work with tables specifically designed for tracking file changes
+- [ ] Understand and work with tables specifically designed for tracking file changes
         Write a Python function that can insert file-level data into database tables using the SQLite INSERT command
         Write a Python function that can update file-level data into database tables using the SQLite UPDATE command
         Write a Python function that can remove file-level data from database tables using the SQLite DELETE command
         Write a Python function that can query file-level data from database tables using the SQLite SELECT command
 
-- [] Apply Automation principles to the tool
+- [ ] Apply Automation principles to the tool
         Write a Python function that can traverse (navigate) through a complete folder structure (including subfolders) and can filter out specific file types
         Write a Python function that can monitor file changes on specific files types and folders
         Write a Python function that can query file data on an SQLite instance after detecting file changes, using calculated MD5 hashes to check for file differences
 
-- [] Generate a Change Report
+- [ ] Generate a Change Report
         Create a series of Python functions that can use the openpyxl library to create an Excel report, using built-in functions provided by the openpyxl library
         Create a Python function that can aggregate existing data gathered through file monitoring and consolidate it into an Excel report, using built-in functions provided by the openpyxl library
         Create a batch file that can invoke Python and run the script, which can be executed through the command line, during operating system startup, or through a scheduled task. 

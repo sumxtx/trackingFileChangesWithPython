@@ -178,4 +178,54 @@ def md5_in_db(fname):
     return items
 
 
+def check_file_changed(fname, md5):
+    #Checks if a file has changed
+    result = False
+    old_md5 = md5_in_db(fname)
+    num_its = len(old_md5)
+    if num_its > 0:
+        if old_md5[0] != md5
+            result = True
+            update_hash_table(fname,md5)
+        else:
+            setup_hash_table(fname, md5)
+        return result
+
+def get_file_extension(fname):
+    # Get the file name extension
+    return os.path.splitext(fname)[1]
+
+def get_mod_date(fname):
+    # Get the modfied date
+    try:
+        mtime = os.path.getmtime(fname)
+    except OSError as emsg:
+        print(str(emsg))
+        mtime = 0
+    return mtime
+
+def md5_short(fname):
+    #Get md5 file hash tag
+    return hashlib.md5(str(fname + '|' + str(get_mod_date(fname))).encode('utf-8')).hexdigest()
+
+def check_file_changes(folder, exclude, ws):
+    changed = False
+    # Checks for files changes
+    for subdir, dirs, files in os.walk(folder):
+        for fname in files:
+            origin = os.path.join(subdir, fname)
+            if os.path.isfile(origin):
+                fext = get_file_extension(origin)
+                if not fext in exclude:
+                    md5 = md5_short(origin)
+                    header_xls_report(ws) # 
+                    if has_changed(origin, md5):
+                        #
+                        now = getdt("%d-%b-%Y %H:%M:%S")
+                        dt = now.split(' ')
+                        # To be done in the last milestone
+                        row_xls_report(ws, fname, origin, subir, dt[0], dt[1])
+                        print(origin + ' has changed on ' + now)
+                        changed = True
+    return changed
 

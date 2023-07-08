@@ -1,0 +1,47 @@
+def get_basefile():
+    #Name of the script
+--
+def connect_db():
+    #Connect to the SQLite DB
+--
+def core_cursor(db_conn, query, args):
+    #Opens a SQLite DB Cursor
+--
+def table_exists(table):
+    #Checks if a SQLite DB Table already exists
+--
+def create_hash_table():
+    # Create a SQLite DB Table
+--
+def create_hash_table_idx():
+    # Create a SQLite DB Table Index
+--
+def run_cmd(qry,args):
+    # Run a specific command on the SQLite DB
+--
+def update_hash_table(fname, md5):
+    # Update the SQLite File Table
+--
+def insert_hash_table(fname, md5):
+    # Insert into the SQLite File Table
+--
+def setup_hash_table(fname, md5):
+    # Set up the hash table
+--
+def md5_in_db(fname):
+    # Checks if md5 hash tag exists in the SQLite DB
+--
+def check_file_changed(fname, md5):
+    #Checks if a file has changed
+--
+def get_file_extension(fname):
+    # Get the file name extension
+--
+def get_mod_date(fname):
+    # Get the modfied date
+--
+def md5_short(fname):
+    #Get md5 file hash tag
+--
+def check_file_changes(folder, exclude, ws):
+    changed = False
